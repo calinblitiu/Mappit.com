@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.6.5.2
+-- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2017 at 12:09 PM
--- Server version: 10.1.13-MariaDB
--- PHP Version: 5.5.35
+-- Generation Time: Mar 14, 2018 at 05:56 PM
+-- Server version: 10.1.21-MariaDB
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `cias`
+-- Database: `projectmap`
 --
 
 -- --------------------------------------------------------
@@ -46,6 +46,29 @@ CREATE TABLE `tbl_items` (
 INSERT INTO `tbl_items` (`itemId`, `itemHeader`, `itemSub`, `itemDesc`, `itemImage`, `isDeleted`, `createdBy`, `createdDtm`, `updatedDtm`, `updatedBy`) VALUES
 (1, 'jquery.validation.js', 'Contribution towards jquery.validation.js', 'jquery.validation.js is the client side javascript validation library authored by Jörn Zaefferer hosted on github for us and we are trying to contribute to it. Working on localization now', 'validation.png', 0, 1, '2015-09-02 00:00:00', NULL, NULL),
 (2, 'CodeIgniter User Management', 'Demo for user management system', 'This the demo of User Management System (Admin Panel) using CodeIgniter PHP MVC Framework and AdminLTE bootstrap theme. You can download the code from the repository or forked it to contribute. Usage and installation instructions are provided in ReadMe.MD', 'cias.png', 0, 1, '2015-09-02 00:00:00', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tbl_poi`
+--
+
+CREATE TABLE `tbl_poi` (
+  `poi_id` int(11) NOT NULL,
+  `poi_lang` varchar(10) NOT NULL,
+  `poi_long` varchar(10) NOT NULL,
+  `poi_radius` int(11) NOT NULL,
+  `poi_order` int(11) NOT NULL,
+  `poi_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `tbl_poi`
+--
+
+INSERT INTO `tbl_poi` (`poi_id`, `poi_lang`, `poi_long`, `poi_radius`, `poi_order`, `poi_updated`) VALUES
+(1, '124', '125', 13, 0, '2018-03-14 08:52:24'),
+(3, '33', '22', 10, 0, '2018-03-14 08:55:40');
 
 -- --------------------------------------------------------
 
@@ -126,6 +149,12 @@ ALTER TABLE `tbl_items`
   ADD PRIMARY KEY (`itemId`);
 
 --
+-- Indexes for table `tbl_poi`
+--
+ALTER TABLE `tbl_poi`
+  ADD PRIMARY KEY (`poi_id`);
+
+--
 -- Indexes for table `tbl_reset_password`
 --
 ALTER TABLE `tbl_reset_password`
@@ -153,10 +182,15 @@ ALTER TABLE `tbl_users`
 ALTER TABLE `tbl_items`
   MODIFY `itemId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 --
+-- AUTO_INCREMENT for table `tbl_poi`
+--
+ALTER TABLE `tbl_poi`
+  MODIFY `poi_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+--
 -- AUTO_INCREMENT for table `tbl_reset_password`
 --
 ALTER TABLE `tbl_reset_password`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `tbl_roles`
 --

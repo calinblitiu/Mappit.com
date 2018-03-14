@@ -1,24 +1,48 @@
  var pois = null;
+ var myPos_latitude = 0;
+ var myPos_longitude = 0;
 
  $(function() {
     function initMap() {
 	    $("#main-map").googleMap({
 	      zoom: 30, // Initial zoom level (optional)
-	      coords: [48.895651, 2.290569], // Map center (optional)
+	      coords: [myPos_latitude, myPos_longitude], // Map center (optional)
 	      type: "ROADMAP", // Map type (optional),
 	      scrollwheel: true,
 	    });
     }
     
 
+	function getMyLocation () {
+		if(navigator.geolocation){
+	        navigator.geolocation.getCurrentPosition(showPosition);
+		
+	    } else { 
+	        alert( "Geolocation is not supported by this browser.");
+	  }
+	}
+
+	function showPosition(position) {
+	    // x.innerHTML = "Latitude: " + position.coords.latitude + 
+	    // "<br>Longitude: " + position.coords.longitude;
+
+	    myPos_longitude = position.coords.longitude;
+	    myPos_latitude = position.coords.latitude;
+	    initMap();
+	}
+
+	getMyLocation();
+    
     $.ajax({
     	url: baseURL + 'ajax/getallpois',
     	dataType: 'json',
     	type: 'get'
     }).done(function(data){
     	pois = data;
-    	initMap();
+    	
     }).fail(function(){
     	console.log('error')
-    })
-  })
+    });
+
+
+  });
