@@ -11,8 +11,8 @@
 
 	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw"></script>
-	<script type="text/javascript" src="<?=base_url()?>assets/js/jquery.googlemap.js"></script>
+	<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw"></script> -->
+	<!-- <script type="text/javascript" src="<?=base_url()?>assets/js/jquery.googlemap.js"></script> -->
 	<script type="text/javascript">
 		var baseURL = "<?=base_url()?>";
 	</script>
@@ -44,5 +44,6 @@
 	</div>
 
 	<script type="text/javascript" src="<?=base_url()?>assets/js/home.js"></script>
+		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw&callback=myMap"></script>
 </body>
 </html>

@@ -18,7 +18,10 @@
   <body class="login-page">
     <div class="login-box">
       <div class="login-logo">
-        <a href="#"><b>Mappit</b><br>Admin System</a>
+        <!-- <a href="#"><b>Mappit</b><br>Admin System</a> -->
+        <a href="<?=base_url()?>">
+          <img src="<?=base_url()?>assets/images/map-spots.png">
+        </a>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign In</p>
