@@ -5,10 +5,17 @@
  $(function() {
     function initMap() {
 	    $("#main-map").googleMap({
-	      zoom: 30, // Initial zoom level (optional)
+	      zoom: 15, // Initial zoom level (optional)
 	      coords: [myPos_latitude, myPos_longitude], // Map center (optional)
 	      type: "ROADMAP", // Map type (optional),
 	      scrollwheel: true,
+	    });
+
+	    $("#main-map").addMarker({
+	    	 coords: [myPos_latitude, myPos_longitude],
+	    	 icon: baseURL + 'assets/images/my-pos-icon-20.png',
+	    	 title: 'My Location',
+	    	 text: 'My Location'
 	    });
     }
     
