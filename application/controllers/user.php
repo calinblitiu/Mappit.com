@@ -344,15 +344,38 @@ class User extends BaseController
         else
         {
             $long = $this->input->post('long');
-            $lang = $this->input->post('lang');
+            $lat = $this->input->post('lat');
             $radius = $this->input->post('radius');
+            $name = $this->input->post('name');
+            $address = $this->input->post('address');
+            $description = $this->input->post('description');
 
             $data['poi_long'] = $long;
-            $data['poi_lang'] = $lang;
+            $data['poi_lat'] = $lat;
             $data['poi_radius'] = $radius;
+            $data['poi_name'] = $name;
+            $data['poi_address'] = $address;
+            $data['poi_description'] = $description;
+
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'mp3';
+            $config['max_size']             = 100000;
+            $config['encrypt_name']         = TRUE;
+
+            $this->load->library('upload', $config);
+
+            if ( ! $this->upload->do_upload('mp3'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                redirect('addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3'] = $upload_data['file_name'];
+            }
 
             $this->poi_model->addNewPOI($data);
-
             redirect('/dashboard');
         }
     }
@@ -379,8 +402,29 @@ class User extends BaseController
         {
             
             $data['poi_long'] = $this->input->post('long');
-            $data['poi_lang'] = $this->input->post('lang');
+            $data['poi_lat'] = $this->input->post('lat');
             $data['poi_radius'] = $this->input->post('radius');
+            $data['poi_name'] = $this->input->post('name');
+            $data['poi_address'] = $this->input->post('address');
+            $data['poi_description'] = $this->input->post('description');
+
+            $config['upload_path']          = './uploads/';
+            $config['allowed_types']        = 'mp3';
+            $config['max_size']             = 100000;
+            $config['encrypt_name']         = TRUE;
+
+            $this->load->library('upload', $config);
+            if ( ! $this->upload->do_upload('mp3'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                // redirect('addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3'] = $upload_data['file_name'];
+            }
+
             $data['poi'] = $this->poi_model->updatePoiById($poi_id, $data);
             redirect('/poi/edit/'.$poi_id);
             

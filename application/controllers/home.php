@@ -9,7 +9,8 @@ class Home extends CI_Controller
     }
 
     public function index(){
-    	$this->load->view("home/home");
+        $data['pois'] = $this->poi_model->getAllPois();
+    	$this->load->view("home/home", $data);
     }
 
     public function getAllPois() {

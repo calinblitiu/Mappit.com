@@ -12,7 +12,9 @@
             <table class="table table-hover" style="background: white;">
                     <tr>
                       <th>POI ID</th>
-                      <th>Lang</th>
+                      <th>Name</th>
+                      <th>Address</th>
+                      <th>Lat</th>
                       <th>Long</th>
                       <th>Radius</th>
                       <th class="text-center">Actions</th>
@@ -24,7 +26,9 @@
                         ?>
                         <tr>
                           <td><?=$i?></td>
-                          <td><?=$poi->poi_lang?></td>
+                          <td><?=$poi->poi_name?></td>
+                          <td><?=$poi->poi_address?></td>
+                          <td><?=$poi->poi_lat?></td>
                           <td><?=$poi->poi_long?></td>
                           <td><?=$poi->poi_radius?></td>
                           <td class="text-center">
