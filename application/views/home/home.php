@@ -47,7 +47,7 @@
 
 	<div class="footer">
 		
-		<h3>Votre position</h3>
+		<h4>Votre position</h4>
 		<div class="routes" id="routes">
 			<!-- <div class="route-item">
 				<div class="route-content">
