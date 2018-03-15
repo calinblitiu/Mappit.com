@@ -39,13 +39,14 @@
     	$("#poi_title").html("POI " + currentObj);
     	$("#playButton").data('poi-id', currentObj + 1);
     	clearInterval(realtimeInterval);
-    	if ((currentObj+1) >= pois.length){
-    		// clearInterval(realtimeInterval);
-    		alert("end");
-    		return;
-    	} else {
+    	// if ((currentObj+1) >= pois.length){
+    		clearInterval(realtimeInterval);
+    		// alert("end");
+    		// window.location = baseURL + 'welcome';
+    		// return;
+    	// } else {
     		currentObj ++;	
-    	}
+    	// }
     	
     }
 }
@@ -144,7 +145,12 @@ function playMusic(poi_id) {
 	var x = document.getElementById("mark-audio-" + poi_id); 
 	x.play();
 	x.onended = function(){
-		realtimeInterval = setInterval(getCurMyPos, 5000);
+		if (currentObj >= pois.length){
+			window.location = baseURL + 'welcome';
+		} else{
+			realtimeInterval = setInterval(getCurMyPos, 5000);
+		}
+		
 	}
 }
 

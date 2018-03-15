@@ -17,4 +17,8 @@ class Home extends CI_Controller
     	$pois = $this->poi_model->getAllPoisArray();
     	echo json_encode($pois);
     }
+
+    public function welcome(){
+        $this->load->view('home/welcome');
+    }
 }

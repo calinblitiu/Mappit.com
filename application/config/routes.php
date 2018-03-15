@@ -77,5 +77,7 @@ $route['poi/editpoi-post/(:num)'] = 'user/editPOIPost/$1';
 $route['poi/delete/(:num)'] = 'user/deletePOI/$1';
 
 $route['ajax/getallpois'] = 'home/getAllPois';
+
+$route['welcome'] = 'home/welcome';
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
