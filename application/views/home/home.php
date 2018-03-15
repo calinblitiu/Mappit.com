@@ -48,23 +48,32 @@
 	<div class="footer">
 		
 		<h3>Votre position</h3>
-		<div style="display: flex;">
-			<i class="glyphicon glyphicon-chevron-right"></i>
-			<div class="" style="padding-left: 10px; width: 100%;">
-				<h4 style="margin-top: 0;">Predre  rue de asldkjf a</h4>
-				<h4>Predre  rue de asldkjf a</h4>
-				<div style="display: flex;align-items: center;width: 100%;">
-					<span class="text-muted">53s(260m)</span>
-					<div style="width: 100%;border-bottom: solid 1px #888;margin: 0 10px;"></div>
+		<div class="routes" id="routes">
+			<!-- <div class="route-item">
+				<div class="route-content">
+					<i class="glyphicon glyphicon-chevron-right"></i>
+					<div class="route-content-div">
+						<h4 class="start-place">Predre  rue de asldkjf a</h4>
+						<h4 class="end-place">Predre  rue de asldkjf a</h4>
+						<div class="detail-guide-info">
+							<img class="direction-icon" src="/assets/images/turn-right-icon.png">
+							<div class="instruction">fasdfas</div>
+						</div>
+						<div class="distance-duration">
+							<span class="text-muted">53s(260m)</span>
+							<div class="middle-line"></div>
+						</div>
+					</div>
 				</div>
-			</div>
+			</div> -->
 		</div>
 	</div>
 
-	<div style="position: absolute;bottom: 0;right: 0; width: 200px;height: 200px;background: #000; color: white;padding: 10px; border-radius: 5px;">
+	<div style="position: absolute;bottom: 0;right: 0; width: 100px;height: 300px;background: #000; color: white;padding: 10px; border-radius: 5px; overflow: scroll;display: none;">
 		<p>Lat: <span id="my_lat"></span></p>
 		<p>Long: <span id="my_long"></span></p>
 		<p>distance: <span id="my_dist"></span></p>
+		<div id="directions"></div>
 	</div>
 
 	<script type="text/javascript" src="<?=base_url()?>assets/js/home.js"></script>

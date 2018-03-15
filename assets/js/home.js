@@ -38,9 +38,10 @@
     	$("#playButton").show();
     	$("#poi_title").html("POI " + currentObj);
     	$("#playButton").data('poi-id', currentObj + 1);
+    	clearInterval(realtimeInterval);
     	if ((currentObj+1) >= pois.length){
-    		clearInterval(realtimeInterval);
-    		// alert("end");
+    		// clearInterval(realtimeInterval);
+    		alert("end");
     		return;
     	} else {
     		currentObj ++;	
@@ -86,10 +87,11 @@ function initMap(){
 	});
 	myMarker.setMap(map);
 	directionsDisplay.setMap(map);
+	directionsDisplay.setOptions({suppressMarkers: true});
 
 	// marker.position = new google.map.LatLng(myPos_latitude + 1, myPos_longitude +1);
 
-	realtimeInterval = setInterval(getCurMyPos, 2000);
+	realtimeInterval = setInterval(getCurMyPos, 5000);
 }
 
 function myMap() {
@@ -105,12 +107,31 @@ $.ajax({
 
 	for(var i = 0; i<pois.length; i++){
 		var poi = pois[i];
-
+		// var infowindow = new google.maps.InfoWindow({
+  //         content: `<h3>`+poi.poi_name + `(`+ poi.poi_address+`)</h3><div>`+poi.poi_description+`</div>`
+  //       });
 		var marker = new google.maps.Marker({
 		    position: new google.maps.LatLng(poi.poi_lat, poi.poi_long),
-		    icon: baseURL + 'assets/images/my-pos-icon-40.png'
+		    icon: baseURL + 'assets/images/my-pos-icon-40.png',
+		    title: poi.poi_address
 		});
 		marker.setMap(map);
+
+		 marker.addListener('click', function() {
+          infowindow.open(map, marker);
+        });
+
+
+		var content = `<h3>`+poi.poi_name + `(`+ poi.poi_address+`)</h3><div>`+poi.poi_description+`</div>`;
+
+		var infowindow = new google.maps.InfoWindow()
+
+		google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+	        return function() {
+	           infowindow.setContent(content);
+	           infowindow.open(map,marker);
+	        };
+	    })(marker,content,infowindow)); 
 
 		markers.push(marker);
 
@@ -121,7 +142,10 @@ $.ajax({
 
 function playMusic(poi_id) {
 	var x = document.getElementById("mark-audio-" + poi_id); 
-	x.play(); 
+	x.play();
+	x.onended = function(){
+		realtimeInterval = setInterval(getCurMyPos, 5000);
+	}
 }
 
 $("#playButton").click(function(){
@@ -138,6 +162,57 @@ function calculateAndDisplayRoute(destination) {
         }, function(response, status) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
+            // $("#directions").html(JSON.stringify(response));
+            // console.log(response.routes);
+            // alert(response)
+            var routes = response.routes;
+            var routes_html = $("#routes");
+             routes_html.html("");
+
+             for(var i_routes = 0; i_routes< routes.length; i_routes++){
+             	// routes_html.append("");
+             	var legs = routes[i_routes].legs;
+             	// console.log(legs);
+             	for (var i_legs = 0; i_legs < legs.length; i_legs ++){
+             		var leg = legs[i_legs];
+             		console.log(leg);
+
+             		var detail_guid_infos = "";
+             		var steps = leg.steps;
+             		for(var i_steps = 0; i_steps< steps.length; i_steps++){
+             			var step = steps[i_steps];
+
+             			detail_guid_infos += `<div class="detail-guide-info">`;
+
+             			if (step.maneuver == ""){
+             				detail_guid_infos += `<i class="glyphicon glyphicon-arrow-up direction-icon"></i>`;
+             			} else if (step.maneuver == "turn-right") {
+             				detail_guid_infos += `<img class="direction-icon" src="/assets/images/turn-right-icon.png">`;
+             			} else if(step.maneuver == "turn-left") {
+             				detail_guid_infos += `<img class="direction-icon" src="/assets/images/turn-left-icon.png">`;
+             			}
+             			detail_guid_infos += `<div class="instruction">` + step.instructions + `<span class="text-muted">`+ step.duration.text + `(` +step.distance.text+`)</span></div>`;
+             			detail_guid_infos += `</div>`;
+             		}
+
+             		routes_html.append(`
+             			<div class="route-item">
+							<div class="route-content">
+								<i class="glyphicon glyphicon-chevron-right"></i>
+								<div class="route-content-div">
+									<h4 class="start-place">`+leg.start_address+`</h4>
+									<h4 class="end-place">`+leg.end_address+`</h4>
+									` + detail_guid_infos + `
+									<div class="distance-duration">
+										<span class="text-muted dis-dur">`+leg.duration.text+`(`+leg.distance.text+`)</span>
+										<div class="middle-line"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+             		`);
+             	}
+             }
           } else {
             // window.alert('Directions request failed due to ' + status);
             console.log('Directions request failed due to ' + status);

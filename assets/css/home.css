@@ -34,6 +34,74 @@ p{
 	left: 0;
 	bottom: 0;
 	padding: 10px 20px;
+	overflow: scroll;
+}
+
+
+
+#playButton{
+	padding: 10px;
+	color: white;
+	font-weight: 700;
+	font-size: 15px;
+	background: #2269b5;
+	border: 0;
+	border-radius: 5px;
+	position: absolute;
+	display: none;
+}
+
+#routes{
+	
+}
+
+#routes .route-item{
+
+
+}
+
+
+#routes .route-item .route-content{
+	display: flex;
+}
+
+#routes .route-item .route-content .route-content-div{
+	padding-left: 10px; 
+	width: 100%;
+}
+
+#routes .route-item .route-content .route-content-div .start-place{
+	margin-top: 0;
+}
+
+#routes .route-item .route-content .route-content-div .end-place{
+
+}
+
+#routes .route-item .route-content .route-content-div .detail-guide-info{
+	display: flex;
+}
+
+#routes .route-item .route-content .route-content-div .detail-guide-info .direction-icon{
+	width: 20px;
+	height: 20px;
+	margin-right:  10px;
+}
+
+#routes .route-item .route-content .route-content-div .distance-duration{
+	display: flex;
+	align-items: center;
+	width: 100%;
+}
+
+#routes .route-item .route-content .route-content-div .distance-duration .dis-dur{
+	width: 10%;
+}
+
+#routes .route-item .route-content .route-content-div .distance-duration .middle-line{
+	width: 100%;
+	border-bottom: solid 1px #888;
+	margin: 0 10px;
 }
 
 @media only screen and (max-width: 500px) {
@@ -48,6 +116,14 @@ p{
 
 	.footer{
 		height: 150px;
+	}
+
+	#routes .route-item .route-content .route-content-div .distance-duration .dis-dur{
+		width: 50%;
+	}
+
+	#routes .route-item .route-content .route-content-div .distance-duration .middle-line{
+		width: 50%;
 	}
 }
 
@@ -65,16 +141,4 @@ p{
 		height: 150px;
 		overflow: scroll;
 	}
-}
-
-#playButton{
-	padding: 10px;
-	color: white;
-	font-weight: 700;
-	font-size: 15px;
-	background: #2269b5;
-	border: 0;
-	border-radius: 5px;
-	position: absolute;
-	display: none;
 }
