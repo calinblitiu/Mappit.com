@@ -34,9 +34,9 @@
     var distance = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
     $("#my_dist").html(distance);
 
-    if(distance <= 30){
+    if(distance <= 100){
     	$("#playButton").show();
-    	$("#poi_title").html("POI " + currentObj);
+    	$("#poi_title").html("POI " + currentObj+1);
     	$("#playButton").data('poi-id', currentObj + 1);
     	clearInterval(realtimeInterval);
     	// if ((currentObj+1) >= pois.length){
@@ -45,6 +45,7 @@
     		// window.location = baseURL + 'welcome';
     		// return;
     	// } else {
+    		alert();
     		currentObj ++;	
     	// }
     	

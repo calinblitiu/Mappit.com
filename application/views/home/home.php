@@ -18,6 +18,8 @@
 	</script>
 </head>
 <body>
+	<img src="<?=base_url()?>assets/images/my-pos-icon-20.png" style="display: none;">
+	<img src="<?=base_url()?>assets/images/my-pos-icon-40.png" style="display: none;">
 	<div class="header">
 		<a href="<?=base_url()?>" style="height: 100%;">
 
@@ -69,11 +71,19 @@
 		</div>
 	</div>
 
-	<div style="position: absolute;bottom: 0;right: 0; width: 100px;height: 300px;background: #000; color: white;padding: 10px; border-radius: 5px; overflow: scroll;display: none;">
+	<div style="position: absolute;bottom: 0;right: 0; width: 200px;height: 200px;background: #000; color: white;padding: 10px; border-radius: 5px; overflow: scroll;">
 		<p>Lat: <span id="my_lat"></span></p>
 		<p>Long: <span id="my_long"></span></p>
 		<p>distance: <span id="my_dist"></span></p>
 		<div id="directions"></div>
+	</div>
+
+	<div id="loading-div">
+		<div class="loading-content">
+			<img src="<?=base_url()?>assets/images/loading.gif" class="loading-gif">
+			<p>Waiting for localization</p>
+
+		</div>
 	</div>
 
 	<script type="text/javascript" src="<?=base_url()?>assets/js/home.js"></script>

@@ -343,19 +343,24 @@ class User extends BaseController
         }
         else
         {
-            $long = $this->input->post('long');
-            $lat = $this->input->post('lat');
-            $radius = $this->input->post('radius');
-            $name = $this->input->post('name');
-            $address = $this->input->post('address');
-            $description = $this->input->post('description');
+            $data['poi_long'] = $this->input->post('long');
+            $data['poi_lat'] = $this->input->post('lat');
+            $data['poi_radius'] = $this->input->post('radius');
+            $data['poi_name'] = $this->input->post('name');
+            $data['poi_name_fr'] = $this->input->post('name_fr');
+            $data['poi_name_nl'] = $this->input->post('name_nl');
+            $data['poi_name_uk'] = $this->input->post('name_uk');
 
-            $data['poi_long'] = $long;
-            $data['poi_lat'] = $lat;
-            $data['poi_radius'] = $radius;
-            $data['poi_name'] = $name;
-            $data['poi_address'] = $address;
-            $data['poi_description'] = $description;
+            $data['poi_address'] = $this->input->post('address');
+            $data['poi_address_fr'] = $this->input->post('address_fr');
+            $data['poi_address_nl'] = $this->input->post('address_nl');
+            $data['poi_address_uk'] = $this->input->post('address_uk');
+
+            $data['poi_description'] = $this->input->post('description');
+            $data['poi_description_fr'] = $this->input->post('description_fr');
+            $data['poi_description_nl'] = $this->input->post('description_nl');
+            $data['poi_description_uk'] = $this->input->post('description_uk');
+
 
             $config['upload_path']          = './uploads/';
             $config['allowed_types']        = 'mp3';
@@ -367,7 +372,7 @@ class User extends BaseController
             if ( ! $this->upload->do_upload('mp3'))
             {
                 $error = array('error' => $this->upload->display_errors());
-                redirect('addnewpoi');
+                redirect('/addnewpoi');
             }
             else
             {
@@ -375,12 +380,45 @@ class User extends BaseController
                 $data['poi_mp3'] = $upload_data['file_name'];
             }
 
+             if ( ! $this->upload->do_upload('mp3_fr'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                redirect('/addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_fr'] = $upload_data['file_name'];
+            }
+
+             if ( ! $this->upload->do_upload('mp3_nl'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                redirect('/addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_nl'] = $upload_data['file_name'];
+            }
+
+             if ( ! $this->upload->do_upload('mp3_uk'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                redirect('/addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_uk'] = $upload_data['file_name'];
+            }
+
             $this->poi_model->addNewPOI($data);
             redirect('/dashboard');
         }
     }
 
-    function editPOI($poi_id){
+    function editPOI($poi_id) {
          if($this->isAdmin() == TRUE)
         {
             $this->loadThis();
@@ -405,8 +443,20 @@ class User extends BaseController
             $data['poi_lat'] = $this->input->post('lat');
             $data['poi_radius'] = $this->input->post('radius');
             $data['poi_name'] = $this->input->post('name');
+            $data['poi_name_fr'] = $this->input->post('name_fr');
+            $data['poi_name_nl'] = $this->input->post('name_nl');
+            $data['poi_name_uk'] = $this->input->post('name_uk');
+
             $data['poi_address'] = $this->input->post('address');
+            $data['poi_address_fr'] = $this->input->post('address_fr');
+            $data['poi_address_nl'] = $this->input->post('address_nl');
+            $data['poi_address_uk'] = $this->input->post('address_uk');
+
             $data['poi_description'] = $this->input->post('description');
+            $data['poi_description_fr'] = $this->input->post('description_fr');
+            $data['poi_description_nl'] = $this->input->post('description_nl');
+            $data['poi_description_uk'] = $this->input->post('description_uk');
+
 
             $config['upload_path']          = './uploads/';
             $config['allowed_types']        = 'mp3';
@@ -425,7 +475,40 @@ class User extends BaseController
                 $data['poi_mp3'] = $upload_data['file_name'];
             }
 
-            $data['poi'] = $this->poi_model->updatePoiById($poi_id, $data);
+            if ( ! $this->upload->do_upload('mp3_fr'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                // redirect('addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_fr'] = $upload_data['file_name'];
+            }
+
+            if ( ! $this->upload->do_upload('mp3_nl'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                // redirect('addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_nl'] = $upload_data['file_name'];
+            }
+
+            if ( ! $this->upload->do_upload('mp3_uk'))
+            {
+                $error = array('error' => $this->upload->display_errors());
+                // redirect('addnewpoi');
+            }
+            else
+            {
+                $upload_data = $this->upload->data();
+                $data['poi_mp3_uk'] = $upload_data['file_name'];
+            }
+
+            $this->poi_model->updatePoiById($poi_id, $data);
             redirect('/poi/edit/'.$poi_id);
             
         }

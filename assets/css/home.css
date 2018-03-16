@@ -49,6 +49,7 @@ p{
 	border-radius: 5px;
 	position: absolute;
 	display: none;
+	z-index: 100;
 }
 
 #routes{
@@ -142,3 +143,31 @@ p{
 		overflow: scroll;
 	}
 }*/
+
+#loading-div{
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	background: #fff;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+#loading-div .loading-content{
+	text-align: center;
+}
+
+#loading-div .loading-content .loading-gif{
+	width: 70px;
+}
+
+#loading-div .loading-background{
+	background: #fff;
+	opacity: 0.8;
+	width: 100%;
+	height: 100%;
+}
