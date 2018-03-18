@@ -38,6 +38,30 @@
 
 				<?php
 				}
+				if ($poi->poi_mp3_fr != ""){
+				?>
+				<audio id="mark-audio-<?=$poi->poi_id?>-fr" >
+				  <source src="<?=base_url()?>uploads/<?=$poi->poi_mp3_fr?>" type="audio/mpeg">
+				</audio>
+
+				<?php
+				}
+				if ($poi->poi_mp3_nl != ""){
+				?>
+				<audio id="mark-audio-<?=$poi->poi_id?>-nl" >
+				  <source src="<?=base_url()?>uploads/<?=$poi->poi_mp3_nl?>" type="audio/mpeg">
+				</audio>
+
+				<?php
+				}
+				if ($poi->poi_mp3_uk != ""){
+				?>
+				<audio id="mark-audio-<?=$poi->poi_id?>-gb" >
+				  <source src="<?=base_url()?>uploads/<?=$poi->poi_mp3_uk?>" type="audio/mpeg">
+				</audio>
+
+				<?php
+				}
 			}
 		?>
 	</div>

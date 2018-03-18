@@ -43,7 +43,16 @@
     	$("#poi_title").html("POI " + currentObj+1);
     	$("#playButton").data('poi-id', currentObj + 1);
     	clearInterval(realtimeInterval);
+
     	currentObj ++;
+        if (currentObj == shortest_markerID) {
+             alert("end");
+             return;
+        } 
+
+        if (currentObj >= markers.length) {
+            currentObj = 0;
+        }
     }
 }
 
@@ -62,6 +71,8 @@ function getShortestPoi(){
             shortest_markerID = i;
         }
     }
+
+    $("#loading-div").hide();
 }
 
  function getMyLocation () {
@@ -106,59 +117,87 @@ function initMap(){
 
 	// marker.position = new google.map.LatLng(myPos_latitude + 1, myPos_longitude +1);
 
-	realtimeInterval = setInterval(getCurMyPos, 5000);
+	// realtimeInterval = setInterval(getCurMyPos, 5000);
 }
 
 function myMap() {
 	getMyLocation();
 }
 
-$.ajax({
-	url: baseURL + 'ajax/getallpois',
-	dataType: 'json',
-	type: 'get'
-}).done(function(data){
-	pois = data;
+function getPOISAndMarkers(){
 
-	for(var i = 0; i<pois.length; i++){
-		var poi = pois[i];
+    $.ajax({
+    	url: baseURL + 'ajax/getallpois',
+    	dataType: 'json',
+    	type: 'get'
+    }).done(function(data){
+    	pois = data;
 
-		var marker = new google.maps.Marker({
-		    position: new google.maps.LatLng(poi.poi_lat, poi.poi_long),
-		    icon: baseURL + 'assets/images/my-pos-icon-40.png',
-		    title: poi.poi_address,
-            animation: google.maps.Animation.DROP,
-		});
-		marker.setMap(map);
+    	for(var i = 0; i<pois.length; i++){
+    		var poi = pois[i];
 
-		marker.addListener('click', function() {
-          infowindow.open(map, marker);
-        });
+            var poi_address = poi.poi_address;
+            var content = `<h3>`+poi.poi_name + `(`+ poi.poi_address+`)</h3><div>`+poi.poi_description+`</div>`;
+            if(country_code == "fr"){
+                poi_address = poi.poi_address_fr;
+                content = `<h3>`+poi.poi_name_fr + `(` + poi.poi_address_fr + `)</h3><div>` + poi.poi_description_fr + `</div>`;
+            } else if (country_code == 'nl') {
+                poi_address = poi.poi_address_nl;
+                content_nl = `<h3>`+poi.poi_name_nl + `(`+ poi.poi_address_nl+`)</h3><div>` + poi.poi_description_nl+`</div>`;
+            } else if (country_code == 'gb') {
+                poi_address = poi.poi_address_uk;
+                content = `<h3>`+poi.poi_name_uk + `(`+ poi.poi_address_uk + `)</h3><div>` + poi.poi_description_uk + `</div>`;
+            }
+
+    		var marker = new google.maps.Marker({
+    		    position: new google.maps.LatLng(poi.poi_lat, poi.poi_long),
+    		    icon: baseURL + 'assets/images/my-pos-icon-40.png',
+    		    title: poi_address,
+                animation: google.maps.Animation.DROP,
+    		});
+    		marker.setMap(map);
+
+    		marker.addListener('click', function() {
+              infowindow.open(map, marker);
+            });
 
 
-		var content = `<h3>`+poi.poi_name + `(`+ poi.poi_address+`)</h3><div>`+poi.poi_description+`</div>`;
+    		
 
-		var infowindow = new google.maps.InfoWindow()
+    		var infowindow = new google.maps.InfoWindow()
 
-		google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
-	        return function() {
-	           infowindow.setContent(content);
-	           infowindow.open(map,marker);
-	        };
-	    })(marker,content,infowindow)); 
+    		google.maps.event.addListener(marker,'click', (function(marker,content,infowindow){ 
+    	        return function() {
+    	           infowindow.setContent(content);
+    	           infowindow.open(map,marker);
+    	        };
+    	    })(marker,content,infowindow)); 
 
-		markers.push(marker);
+    		markers.push(marker);
 
-	}
+    	}
 
-    getShortestPoi();
-}).fail(function(){
-	console.log('error')
-});
+        getShortestPoi();
+        currentObj = shortest_markerID;
+        realtimeInterval = setInterval(getCurMyPos, 5000);
+    }).fail(function(){
+    	console.log('error')
+    });
+}
 
 function playMusic(poi_id) {
-	var x = document.getElementById("mark-audio-" + poi_id); 
-	x.play();
+	var x = null;
+    // var country_x = document.getElementById("mark-audio-" + poi_id); 
+    alert(country_code);
+	if (country_code =="" && ( country_code !="fr" || country_code != 'nl' || country_code != 'gb')) {
+        x = document.getElementById("mark-audio-" + poi_id); 
+        alert("mark-audio-" + poi_id);
+    } else {
+        x = document.getElementById("mark-audio-" + poi_id + "-" + country_code); 
+         alert("mark-audio-" + poi_id + "-" + country_code);
+    }
+    x.play();
+
 	x.onended = function(){
 		if (currentObj >= pois.length){
 			window.location = baseURL + 'welcome';
@@ -241,8 +280,6 @@ function calculateAndDisplayRoute(destination) {
         });
       }
 
-// $("#loading-div").hide();
-
 function getCountryFunction()
 {
     $.ajax({
@@ -251,9 +288,10 @@ function getCountryFunction()
 
     }).done(function (data){
         clearInterval(getCountryNameInterval); 
-        $("#loading-div").hide();
+        // $("#loading-div").hide();
         country_code = data.country.toLowerCase();  
-
+        // alert(country_code);
+        getPOISAndMarkers();
     }).fail(function(){
         alert("Your Location Is not provided. Please reload the page");
     });
