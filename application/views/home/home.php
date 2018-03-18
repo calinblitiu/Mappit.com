@@ -95,7 +95,7 @@
 		</div>
 	</div>
 
-	<div style="position: absolute;bottom: 0;right: 0; width: 200px;height: 200px;background: #000; color: white;padding: 10px; border-radius: 5px; overflow: scroll;">
+	<div style="position: absolute;bottom: 0;right: 0; width: 200px;height: 200px;background: #000; color: white;padding: 10px; border-radius: 5px; overflow: scroll;display: none;">
 		<p>Lat: <span id="my_lat"></span></p>
 		<p>Long: <span id="my_long"></span></p>
 		<p>distance: <span id="my_dist"></span></p>
