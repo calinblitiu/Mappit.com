@@ -12,6 +12,10 @@
  var currentObj = 0;
  var realtimeInterval = null;
 
+ var getCountryNameInterval = null;
+ var country_code = '';
+ var shortest_markerID = 0;
+
  function getCurMyPos(){
  	if(navigator.geolocation){
         navigator.geolocation.getCurrentPosition(setCurMyPos);
@@ -39,16 +43,24 @@
     	$("#poi_title").html("POI " + currentObj+1);
     	$("#playButton").data('poi-id', currentObj + 1);
     	clearInterval(realtimeInterval);
-    	// if ((currentObj+1) >= pois.length){
-    		clearInterval(realtimeInterval);
-    		// alert("end");
-    		// window.location = baseURL + 'welcome';
-    		// return;
-    	// } else {
-    		alert();
-    		currentObj ++;	
-    	// }
-    	
+    	currentObj ++;
+    }
+}
+
+function getShortestPoi(){
+    if (myMarker == null) {
+        alert("Your location is failed Please reload page");
+        return;
+    }
+    var my_pos = myMarker.getPosition();
+    var first_pos = markers[0].getPosition();
+    var shortest_length = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
+    for (var  i = 1; i < markers.length; i++) {
+        var temp_pos = markers[0].getPosition();
+        var temp_length = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
+        if (temp_length < shortest_length){
+            shortest_markerID = i;
+        }
     }
 }
 
@@ -85,7 +97,8 @@ function initMap(){
 	map = new google.maps.Map(document.getElementById("main-map"),mapProp);
 	myMarker = new google.maps.Marker({
 	    position: myCenter,
-	    icon: baseURL + 'assets/images/my-pos-icon-20.png'
+	    icon: baseURL + 'assets/images/my-pos-icon-20.png',
+        animation: google.maps.Animation.DROP,
 	});
 	myMarker.setMap(map);
 	directionsDisplay.setMap(map);
@@ -109,17 +122,16 @@ $.ajax({
 
 	for(var i = 0; i<pois.length; i++){
 		var poi = pois[i];
-		// var infowindow = new google.maps.InfoWindow({
-  //         content: `<h3>`+poi.poi_name + `(`+ poi.poi_address+`)</h3><div>`+poi.poi_description+`</div>`
-  //       });
+
 		var marker = new google.maps.Marker({
 		    position: new google.maps.LatLng(poi.poi_lat, poi.poi_long),
 		    icon: baseURL + 'assets/images/my-pos-icon-40.png',
-		    title: poi.poi_address
+		    title: poi.poi_address,
+            animation: google.maps.Animation.DROP,
 		});
 		marker.setMap(map);
 
-		 marker.addListener('click', function() {
+		marker.addListener('click', function() {
           infowindow.open(map, marker);
         });
 
@@ -138,6 +150,8 @@ $.ajax({
 		markers.push(marker);
 
 	}
+
+    getShortestPoi();
 }).fail(function(){
 	console.log('error')
 });
@@ -226,3 +240,23 @@ function calculateAndDisplayRoute(destination) {
           }
         });
       }
+
+// $("#loading-div").hide();
+
+function getCountryFunction()
+{
+    $.ajax({
+        url: 'https://ipinfo.io/json',
+        dataType: 'json',
+
+    }).done(function (data){
+        clearInterval(getCountryNameInterval); 
+        $("#loading-div").hide();
+        country_code = data.country.toLowerCase();  
+
+    }).fail(function(){
+        alert("Your Location Is not provided. Please reload the page");
+    });
+}
+
+getCountryFunction();
