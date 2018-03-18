@@ -34,6 +34,7 @@
     myMarker.setPosition(new google.maps.LatLng(myPos_latitude, myPos_longitude));
 	var my_pos = myMarker.getPosition();
 	var first_pos = markers[currentObj].getPosition();
+    // alert(currentObj);
 	calculateAndDisplayRoute({lat:parseFloat(pois[currentObj].poi_lat), lng: parseFloat(pois[currentObj].poi_long)})
     var distance = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
     $("#my_dist").html(distance);
@@ -64,11 +65,14 @@ function getShortestPoi(){
     var my_pos = myMarker.getPosition();
     var first_pos = markers[0].getPosition();
     var shortest_length = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
+    
     for (var  i = 1; i < markers.length; i++) {
-        var temp_pos = markers[0].getPosition();
-        var temp_length = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
+        var temp_pos = markers[i].getPosition();
+        var temp_length = google.maps.geometry.spherical.computeDistanceBetween(my_pos, temp_pos);
         if (temp_length < shortest_length){
+            shortest_length = temp_length;
             shortest_markerID = i;
+
         }
     }
 
@@ -118,6 +122,7 @@ function initMap(){
 	// marker.position = new google.map.LatLng(myPos_latitude + 1, myPos_longitude +1);
 
 	// realtimeInterval = setInterval(getCurMyPos, 5000);
+    getCountryFunction();
 }
 
 function myMap() {
@@ -176,6 +181,7 @@ function getPOISAndMarkers(){
 
         getShortestPoi();
         currentObj = shortest_markerID;
+        
         realtimeInterval = setInterval(getCurMyPos, 5000);
     }).fail(function(){
     	console.log('error')
@@ -185,13 +191,13 @@ function getPOISAndMarkers(){
 function playMusic(poi_id) {
 	var x = null;
     // var country_x = document.getElementById("mark-audio-" + poi_id); 
-    alert(country_code);
+    
 	if (country_code =="" && ( country_code !="fr" || country_code != 'nl' || country_code != 'gb')) {
         x = document.getElementById("mark-audio-" + poi_id); 
-        alert("mark-audio-" + poi_id);
+        // alert("mark-audio-" + poi_id);
     } else {
         x = document.getElementById("mark-audio-" + poi_id + "-" + country_code); 
-         alert("mark-audio-" + poi_id + "-" + country_code);
+         // alert("mark-audio-" + poi_id + "-" + country_code);
     }
     x.play();
 
@@ -290,8 +296,9 @@ function getCountryFunction()
         // alert(country_code);
         getPOISAndMarkers();
     }).fail(function(){
-        alert("Your Location Is not provided. Please reload the page");
+        // alert("Your Location Is not provided. Please reload the page");
+        getCountryFunction();
     });
 }
 
-getCountryFunction();
+// getCountryFunction();
