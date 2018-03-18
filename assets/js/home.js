@@ -157,12 +157,9 @@ function getPOISAndMarkers(){
     		});
     		marker.setMap(map);
 
-    		marker.addListener('click', function() {
-              infowindow.open(map, marker);
-            });
-
-
-    		
+    		// marker.addListener('click', function() {
+      //         infowindow.open(map, marker);
+      //       });
 
     		var infowindow = new google.maps.InfoWindow()
 
