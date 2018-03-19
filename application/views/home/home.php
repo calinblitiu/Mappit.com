@@ -110,6 +110,13 @@
 		</div>
 	</div>
 
+	<div id="calculating-div">
+		<div class="calculating-content">
+			<img src="<?=base_url()?>assets/images/loading.gif" class="calculating-gif">
+			<p>Calculating route to your POI</p>
+		</div>
+	</div>
+
 	<script type="text/javascript" src="<?=base_url()?>assets/js/home.js"></script>
 		<script  async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true&key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw&callback=myMap"></script>
 </body>

@@ -38,16 +38,18 @@
 	calculateAndDisplayRoute({lat:parseFloat(pois[currentObj].poi_lat), lng: parseFloat(pois[currentObj].poi_long)})
     var distance = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
     $("#my_dist").html(distance);
-
+    $("#calculating-div").hide();
     if(distance <= 100){
     	$("#playButton").show();
-    	$("#poi_title").html("POI " + currentObj+1);
-    	$("#playButton").data('poi-id', currentObj + 1);
+    	$("#poi_title").html("POI " + (parseInt(currentObj) + 1));
+        // alert(parseInt(currentObj) + 1);
+    	$("#playButton").data('poi-id', (parseInt(currentObj) + 1));
     	clearInterval(realtimeInterval);
 
     	currentObj ++;
         if (currentObj == shortest_markerID) {
-             alert("end");
+             // alert("end");
+             // window.location = baseURL + "welcome";
              return;
         } 
 
@@ -77,6 +79,7 @@ function getShortestPoi(){
     }
 
     $("#loading-div").hide();
+    $("#calculating-div").css("display",'flex');
 }
 
  function getMyLocation () {
@@ -192,7 +195,7 @@ function playMusic(poi_id) {
 	var x = null;
     // var country_x = document.getElementById("mark-audio-" + poi_id); 
     
-	if (country_code =="" && ( country_code !="fr" || country_code != 'nl' || country_code != 'gb')) {
+	if (country_code !="" &&  country_code !="fr" && country_code != 'nl' && country_code != 'gb') {
         x = document.getElementById("mark-audio-" + poi_id); 
         // alert("mark-audio-" + poi_id);
     } else {
