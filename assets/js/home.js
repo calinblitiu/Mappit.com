@@ -309,7 +309,7 @@ function getCountryFunction()
 
 $(".way-item").click(function(){
   travel_mode = $(this).data("travel-mode");
-  alert(travel_mode);
+  // alert(travel_mode);
   $("#select-travel-way").hide();
   $("#calculating-div").css("display",'flex');
   $("#route-guide").show();
