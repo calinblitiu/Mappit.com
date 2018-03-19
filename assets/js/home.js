@@ -40,7 +40,7 @@
     var distance = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
     $("#my_dist").html(distance);
     $("#calculating-div").hide();
-    if(distance <= 100){
+    if(distance <= 500){
     	$("#playButton").show();
     	$("#poi_title").html("POI " + (parseInt(currentObj) + 1));
         // alert(parseInt(currentObj) + 1);
