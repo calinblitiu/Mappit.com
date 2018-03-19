@@ -15,6 +15,7 @@
  var getCountryNameInterval = null;
  var country_code = '';
  var shortest_markerID = 0;
+ var travel_mode = "DRIVING";
 
  function getCurMyPos(){
  	if(navigator.geolocation){
@@ -32,8 +33,8 @@
     $("#my_long").html(myPos_longitude); 
     
     myMarker.setPosition(new google.maps.LatLng(myPos_latitude, myPos_longitude));
-	var my_pos = myMarker.getPosition();
-	var first_pos = markers[currentObj].getPosition();
+	  var my_pos = myMarker.getPosition();
+	  var first_pos = markers[currentObj].getPosition();
     // alert(currentObj);
 	calculateAndDisplayRoute({lat:parseFloat(pois[currentObj].poi_lat), lng: parseFloat(pois[currentObj].poi_long)})
     var distance = google.maps.geometry.spherical.computeDistanceBetween(my_pos, first_pos);
@@ -79,7 +80,7 @@ function getShortestPoi(){
     }
 
     $("#loading-div").hide();
-    $("#calculating-div").css("display",'flex');
+    // $("#calculating-div").css("display",'flex');
 }
 
  function getMyLocation () {
@@ -185,7 +186,7 @@ function getPOISAndMarkers(){
         getShortestPoi();
         currentObj = shortest_markerID;
         
-        realtimeInterval = setInterval(getCurMyPos, 5000);
+        // realtimeInterval = setInterval(getCurMyPos, 5000);
     }).fail(function(){
     	console.log('error')
     });
@@ -224,7 +225,7 @@ function calculateAndDisplayRoute(destination) {
         directionsService.route({
           origin: {lat: parseFloat(myPos_latitude), lng: parseFloat(myPos_longitude)},
           destination: destination,
-          travelMode: 'DRIVING'
+          travelMode: travel_mode
         }, function(response, status) {
           if (status === 'OK') {
             directionsDisplay.setDirections(response);
@@ -305,3 +306,13 @@ function getCountryFunction()
 }
 
 // getCountryFunction();
+
+$(".way-item").click(function(){
+  travel_mode = $(this).data("travel-mode");
+  alert(travel_mode);
+  $("#select-travel-way").hide();
+  $("#calculating-div").css("display",'flex');
+  $("#route-guide").show();
+  // getCountryFunction();
+  realtimeInterval = setInterval(getCurMyPos, 5000);
+});

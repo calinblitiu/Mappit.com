@@ -72,26 +72,22 @@
 	</div>
 
 	<div class="footer">
-		
-		<h4>Votre position</h4>
-		<div class="routes" id="routes">
-			<!-- <div class="route-item">
-				<div class="route-content">
-					<i class="glyphicon glyphicon-chevron-right"></i>
-					<div class="route-content-div">
-						<h4 class="start-place">Predre  rue de asldkjf a</h4>
-						<h4 class="end-place">Predre  rue de asldkjf a</h4>
-						<div class="detail-guide-info">
-							<img class="direction-icon" src="/assets/images/turn-right-icon.png">
-							<div class="instruction">fasdfas</div>
-						</div>
-						<div class="distance-duration">
-							<span class="text-muted">53s(260m)</span>
-							<div class="middle-line"></div>
-						</div>
-					</div>
-				</div>
-			</div> -->
+		<div id="route-guide">
+			<h4>Votre position</h4>
+			<div class="routes" id="routes">
+			</div>
+		</div>
+
+		<div id="select-travel-way">
+			<h4>Select your way of travel</h4>
+			
+				<div class="way-containter">
+					<span class="way-item" data-travel-mode="DRIVING"><i class="fas fa-car"></i></span>
+					<span class="way-item" data-travel-mode="TRANSIT"><i class="fas fa-bus"></i></i></span>
+					<span class="way-item" data-travel-mode="WALKING"><i class="fas fa-street-view"></i></span>
+					<span class="way-item" data-travel-mode="BICYCLING"><i class="fas fa-bicycle"></i></span>
+				</div> 
+			
 		</div>
 	</div>
 
@@ -118,6 +114,8 @@
 	</div>
 
 	<script type="text/javascript" src="<?=base_url()?>assets/js/home.js"></script>
-		<script  async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true&key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw&callback=myMap"></script>
+	<script  async defer type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=geometry&sensor=true&key=AIzaSyB4aBzOIeSyU2zYZgiLJkq9j5cxy5uN8Jw&callback=myMap"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/solid.js" integrity="sha384-+Ga2s7YBbhOD6nie0DzrZpJes+b2K1xkpKxTFFcx59QmVPaSA8c7pycsNaFwUK6l" crossorigin="anonymous"></script>
+	<script defer src="https://use.fontawesome.com/releases/v5.0.8/js/fontawesome.js" integrity="sha384-7ox8Q2yzO/uWircfojVuCQOZl+ZZBg2D2J5nkpLqzH1HY0C1dHlTKIbpRz/LG23c" crossorigin="anonymous"></script>
 </body>
 </html>
